@@ -1,0 +1,27 @@
+defaults:
+  - _self_
+  - config: dbt
+
+hydra:
+  run:
+    dir: ${config.output_dir}/${hydra:job.name}-${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+config:
+  data_path: '/root/data/train/source/'
+  gt_path: '/root/data/train/label/'
+  pred_data_path: '/root/data/test/source/'
+  pred_gt_path: '/root/data/test/label/'
+  init_type: 'none'  # ['normal', 'xavier', 'xavier_uniform', 'kaiming', 'orthogonal', 'none]
+  aug: False  # True or False
+  epochs: 50
+  epochs_per_checkpoint: 10
+  batch_size: 4
+  init_lr: 0.001
+  scheduler_step_size: 10
+  scheduler_gamma: 0.8
+  cudnn_enabled: True
+  cudnn_benchmark: True
+  use_scheduler: True
+  
+  job_name: ${hydra:job.name}
+  hydra_path: ${hydra:runtime.output_dir}
